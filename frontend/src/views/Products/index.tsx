@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useStoreProductsActions, useStoreProductsState } from '../../providers/products.store';
+import { useStoresActions, useStoresState } from '../../providers/store';
 import { ProductContainer } from './styles';
-import Table from '../../shared/components/Table';
-import { Button, Form, Header, Modal } from 'semantic-ui-react';
+import Table from './components/Table';
+import { Button, Form, Modal } from 'semantic-ui-react';
 
 const Products: React.FC = () => {
-    const load = useStoreProductsActions(action => action.loadProducts);
-    const create = useStoreProductsActions(action => action.createProduct);
-    const products = useStoreProductsState(state => state.products);
+    const load = useStoresActions(action => action.loadProducts);
+    const create = useStoresActions(action => action.createProduct);
+    const products = useStoresState(state => state.products);
 
     const [open, setOpen] = useState(false);
     const [formData, setFormData] = useState({
@@ -19,7 +19,8 @@ const Products: React.FC = () => {
 
     useEffect(() => {
         load();
-    }, []);
+    }, [load]);
+
     return (
         <ProductContainer>
             <button onClick={() => setOpen(!open)}>
@@ -65,6 +66,7 @@ const Products: React.FC = () => {
                         onClick={() => {
                             create(formData);
                             setFormData({ category: '', name: '', price: 0 });
+                            setOpen(false);
                         }}
                         positive
                     />

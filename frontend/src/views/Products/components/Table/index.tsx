@@ -1,15 +1,15 @@
 import React from 'react';
 import { useTable } from 'react-table';
-import Product from '../../../models/Product.model';
-import { Button, Icon, Table as STable } from 'semantic-ui-react'
-import { useStoreProductsActions } from '../../../providers/products.store';
+import Product from '../../../../models/Product.model';
+import { Button, Table as STable } from 'semantic-ui-react'
+import { useStoresActions } from '../../../../providers/store';
 
 interface Props {
     products: Product[];
 }
 
 const Table: React.FC<Props> = ({ products }) => {
-    const deleteProduct = useStoreProductsActions(action => action.deleteProduct);
+    const deleteProduct = useStoresActions(action => action.deleteProduct);
     const columns = React.useMemo(() => [
         {
             Header: 'Nome',
