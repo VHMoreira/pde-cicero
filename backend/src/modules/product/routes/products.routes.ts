@@ -11,7 +11,7 @@ productsRouter.route('/')
 
 productsRouter.route('/:id')
     .get(productsController.show)
-    // .put(productsController.edit)
+    .put(productsController.edit)
     .delete(productsController.exclude);
 
 export default productsRouter;
