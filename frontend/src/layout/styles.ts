@@ -8,6 +8,17 @@ export const LayoutContainer = styled.div`
     display: flex;
     flex-direction: row;
     position: relative;
+    @media(max-width: 1100px) {
+        flex-direction: column;
+    }
+
+    @media(max-width: 767px) {
+        flex-direction: column;
+
+        thead{
+            display: none !important;
+        }
+    }
 `;
 
 export const Menu = styled.div`
@@ -25,6 +36,21 @@ export const Menu = styled.div`
         padding:20px;
         width: 90%;
     }
+
+    @media(max-width: 1100px) {
+        /* position: fixed; */
+        height: 10vh;
+        min-width: 100%;
+        min-height: 0;
+        flex-direction: row;
+        align-items: flex-start;
+
+        img{
+            padding:20px;
+            width: auto; 
+            height: 100%;
+        }
+    }
 `;
 
 export const MenuItem = styled(NavLink)`
@@ -38,5 +64,21 @@ export const MenuItem = styled(NavLink)`
 
     & + &{
         border-top: 1px solid #f8f8f8;
+    }
+
+    @media(max-width: 1100px) {
+        /* font-size: 1rem; */
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        & + &{
+            border-top: 0;
+        }
+    }
+
+    @media(max-width: 767px) {
+        font-size: 0.9rem;
     }
 `;

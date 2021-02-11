@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useStoresActions } from '../../../../providers/store';
 import { Button, Form, Modal } from 'semantic-ui-react';
 import Product from '../../../../models/Product.model';
-import { priceFormat } from '../../../../shared/utils/priceFormat';
 
 interface Props {
     open: boolean;

@@ -23,6 +23,23 @@ const Table: React.FC<Props> = ({ sales }) => {
         <TableContainer>
             <TableContent>
                 <Accordion fluid styled>
+                    <Accordion.Title active>
+                        <header>
+                            <Icon name='dollar sign' />
+                            <div>
+                                Nome do Cliente
+                            </div>
+                            <div>
+                                Status
+                            </div>
+                            <div>
+                                Feito em
+                            </div>
+                            <div>
+                                Total da venda
+                            </div>
+                        </header>
+                    </Accordion.Title>
                     {sales.map((s, index) => (
                         <>
                             <Accordion.Title

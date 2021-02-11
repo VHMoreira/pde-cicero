@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Form, Input, Modal, TableCell, TableRow, Table as STable, TableBody } from 'semantic-ui-react';
 import Product from '../../models/Product.model';

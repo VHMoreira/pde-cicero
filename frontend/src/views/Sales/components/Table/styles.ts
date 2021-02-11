@@ -26,6 +26,16 @@ export const TableContent = styled.div`
             flex:1;
             font-size: 1.2rem;
             font-weight: 600;
+
+            @media(max-width: 767px) {
+                font-size: 1rem;
+            }
+        }
+    }
+
+    @media(max-width: 767px) {
+        div.title:first-of-type{
+            display: none;
         }
     }
 `;
