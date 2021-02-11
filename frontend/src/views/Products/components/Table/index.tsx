@@ -7,9 +7,10 @@ import { tableDataFormater } from '../../../../shared/utils/tableDataFormater';
 
 interface Props {
     products: Product[];
+    openEditModal(product: Product): void;
 }
 
-const Table: React.FC<Props> = ({ products }) => {
+const Table: React.FC<Props> = ({ products, openEditModal }) => {
     const deleteProduct = useStoresActions(action => action.deleteProduct);
     const columns = useMemo(() => [
         {
@@ -44,7 +45,8 @@ const Table: React.FC<Props> = ({ products }) => {
                                 {column.render('Header')}
                             </STable.HeaderCell>
                         ))}
-                        <STable.HeaderCell></STable.HeaderCell>
+                        <STable.HeaderCell />
+                        <STable.HeaderCell />
                     </STable.Row>
                 ))}
             </STable.Header>
@@ -60,6 +62,9 @@ const Table: React.FC<Props> = ({ products }) => {
                                     </STable.Cell>
                                 )
                             })}
+                            <STable.Cell textAlign='center'>
+                                <Button basic icon='pencil' onClick={() => openEditModal(row.original)} />
+                            </STable.Cell>
                             <STable.Cell textAlign='center'>
                                 <Button basic color='red' icon='trash alternate outline' onClick={() => deleteProduct({ id: row.original._id })} />
                             </STable.Cell>

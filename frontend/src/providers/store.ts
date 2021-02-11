@@ -5,7 +5,8 @@ import Order from '../models/Order.model';
 
 interface StoreModel {
     products: Product[];
-    createProduct: Thunk<StoreModel, { name: string, price: number }>
+    createProduct: Thunk<StoreModel, { name: string, price: number, category: string }>
+    editProduct: Thunk<StoreModel, { _id: string, name: string, price: number, category: string }>
     deleteProduct: Thunk<StoreModel, { id: string }>
     initializeProduct: Action<StoreModel, []>;
     loadProducts: Thunk<StoreModel, void>;
@@ -28,6 +29,14 @@ export const stores = createStore<StoreModel>({
     }),
     createProduct: thunk(async (actions, payload) => {
         await axios.post('http://localhost:8080/products', payload);
+        actions.loadProducts();
+    }),
+    editProduct: thunk(async (actions, payload) => {
+        await axios.put(`http://localhost:8080/products/${payload._id}`, {
+            name: payload.name,
+            category: payload.category,
+            price: payload.price
+        });
         actions.loadProducts();
     }),
     deleteProduct: thunk(async (actions, payload) => {
