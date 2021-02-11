@@ -1,6 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Form, Input, Modal, TableCell, TableRow, Table as STable, TableBody } from 'semantic-ui-react';
-import Product from '../../models/Product.model';
+import React, { useEffect } from 'react';
 import { useStoresActions, useStoresState } from '../../providers/store';
 import Table from './components/Table';
 import { SalesContainer } from './styles';

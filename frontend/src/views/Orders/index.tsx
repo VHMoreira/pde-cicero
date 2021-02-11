@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Form, Input, Modal, TableCell, TableRow, Table as STable, TableBody } from 'semantic-ui-react';
 import Product from '../../models/Product.model';
 import { useStoresActions, useStoresState } from '../../providers/store';
+import { priceFormat } from '../../shared/utils/priceFormat';
 import Table from './components/Table';
 import { OrderContainer } from './styles';
 
@@ -83,7 +84,7 @@ const Orders: React.FC = () => {
                                         <TableRow>
                                             <TableCell />
                                             <TableCell>
-                                                Total: R$ {selectedProductsList.reduce((acc, current) => acc + current.price, 0)}
+                                                Total: R$ {priceFormat(selectedProductsList.reduce((acc, current) => acc + current.price, 0))}
                                             </TableCell>
                                         </TableRow>}
                                 </TableBody>

@@ -2,6 +2,8 @@ import React from 'react';
 import { useTable } from 'react-table';
 import { Table as STable } from 'semantic-ui-react'
 import Order from '../../../../models/Order.model';
+import { priceFormat } from '../../../../shared/utils/priceFormat';
+import { tableDataFormater } from '../../../../shared/utils/tableDataFormater';
 
 interface Props {
     sales: Order[];
@@ -56,7 +58,7 @@ const Table: React.FC<Props> = ({ sales }) => {
                             {row.cells.map(cell => {
                                 return (
                                     <STable.Cell {...cell.getCellProps()}>
-                                        {cell.render('Cell')}
+                                        {tableDataFormater(cell.value)}
                                     </STable.Cell>
                                 )
                             })}
@@ -68,7 +70,7 @@ const Table: React.FC<Props> = ({ sales }) => {
                     <STable.Cell />
                     <STable.Cell content='R$' textAlign='right' />
                     <STable.Cell>
-                        {sales.reduce((acc, current) => acc + current.total, 0)}
+                        {priceFormat(sales.reduce((acc, current) => acc + current.total, 0))}
                     </STable.Cell>
                 </STable.Row>
             </STable.Body>

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTable } from 'react-table';
 import Product from '../../../../models/Product.model';
 import { Button, Table as STable } from 'semantic-ui-react'
 import { useStoresActions } from '../../../../providers/store';
+import { tableDataFormater } from '../../../../shared/utils/tableDataFormater';
 
 interface Props {
     products: Product[];
@@ -10,7 +11,7 @@ interface Props {
 
 const Table: React.FC<Props> = ({ products }) => {
     const deleteProduct = useStoresActions(action => action.deleteProduct);
-    const columns = React.useMemo(() => [
+    const columns = useMemo(() => [
         {
             Header: 'Nome',
             accessor: 'name' as keyof Product, // accessor is the "key" in the data
@@ -55,7 +56,7 @@ const Table: React.FC<Props> = ({ products }) => {
                             {row.cells.map(cell => {
                                 return (
                                     <STable.Cell {...cell.getCellProps()}>
-                                        {cell.render('Cell')}
+                                        {tableDataFormater(cell.value)}
                                     </STable.Cell>
                                 )
                             })}

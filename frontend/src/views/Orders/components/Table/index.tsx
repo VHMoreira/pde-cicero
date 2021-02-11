@@ -3,6 +3,7 @@ import { useTable } from 'react-table';
 import { Button, Table as STable } from 'semantic-ui-react'
 import { useStoresActions } from '../../../../providers/store';
 import Order from '../../../../models/Order.model';
+import { tableDataFormater } from '../../../../shared/utils/tableDataFormater';
 
 interface Props {
     orders: Order[];
@@ -60,7 +61,7 @@ const Table: React.FC<Props> = ({ orders }) => {
                             {row.cells.map(cell => {
                                 return (
                                     <STable.Cell {...cell.getCellProps()}>
-                                        {cell.render('Cell')}
+                                        {tableDataFormater(cell.value)}
                                     </STable.Cell>
                                 )
                             })}
