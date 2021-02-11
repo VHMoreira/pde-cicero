@@ -1,15 +1,13 @@
 import React from 'react';
 import { useTable } from 'react-table';
-import { Button, Table as STable } from 'semantic-ui-react'
-import { useStoresActions } from '../../../../providers/store';
+import { Table as STable } from 'semantic-ui-react'
 import Order from '../../../../models/Order.model';
 
 interface Props {
-    orders: Order[];
+    sales: Order[];
 }
 
-const Table: React.FC<Props> = ({ orders }) => {
-    const changeStatus = useStoresActions(action => action.changeStatus);
+const Table: React.FC<Props> = ({ sales }) => {
     const columns = React.useMemo(() => [
         {
             Header: 'Nome do cliente',
@@ -35,7 +33,7 @@ const Table: React.FC<Props> = ({ orders }) => {
         headerGroups,
         rows,
         prepareRow
-    } = useTable({ data: orders, columns: columns });
+    } = useTable({ data: sales, columns: columns });
 
     return (
         <STable striped {...getTableProps()}>
@@ -47,8 +45,6 @@ const Table: React.FC<Props> = ({ orders }) => {
                                 {column.render('Header')}
                             </STable.HeaderCell>
                         ))}
-                        <STable.HeaderCell />
-                        <STable.HeaderCell />
                     </STable.Row>
                 ))}
             </STable.Header>
@@ -64,27 +60,17 @@ const Table: React.FC<Props> = ({ orders }) => {
                                     </STable.Cell>
                                 )
                             })}
-                            <STable.Cell textAlign='center'>
-                                {row.original.status === 'on_progress' &&
-                                    <Button
-                                        basic
-                                        color='green'
-                                        icon='check circle outline'
-                                        onClick={() => changeStatus({ id: row.original._id, status: 'confirmed' })}
-                                    />}
-                            </STable.Cell>
-                            <STable.Cell textAlign='center'>
-                                {row.original.status === 'on_progress' &&
-                                    <Button
-                                        basic
-                                        color='red'
-                                        icon='ban'
-                                        onClick={() => changeStatus({ id: row.original._id, status: 'canceled' })}
-                                    />}
-                            </STable.Cell>
                         </STable.Row>
                     )
                 })}
+                <STable.Row>
+                    <STable.Cell />
+                    <STable.Cell />
+                    <STable.Cell content='R$' textAlign='right' />
+                    <STable.Cell>
+                        {sales.reduce((acc, current) => acc + current.total, 0)}
+                    </STable.Cell>
+                </STable.Row>
             </STable.Body>
         </STable>
     );

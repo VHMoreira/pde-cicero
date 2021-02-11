@@ -26,6 +26,13 @@ const Layout: React.FC = () => {
               </p>
             </li>
           </MenuItem>
+          <MenuItem to='/sales'>
+            <li>
+              <p>
+                Vendas
+              </p>
+            </li>
+          </MenuItem>
 
         </Menu>
         <StoreProvider store={stores}>

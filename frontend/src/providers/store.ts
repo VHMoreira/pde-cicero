@@ -5,16 +5,19 @@ import Order from '../models/Order.model';
 
 interface StoreModel {
     products: Product[];
-    orders: Order[]
     createProduct: Thunk<StoreModel, { name: string, price: number }>
     deleteProduct: Thunk<StoreModel, { id: string }>
     initializeProduct: Action<StoreModel, []>;
     loadProducts: Thunk<StoreModel, void>;
+    orders: Order[];
     createOrder: Thunk<StoreModel, { client_name: string, products: string[] }>
     changeStatus: Thunk<StoreModel, { status: string, id: string }>
     initializeOrder: Action<StoreModel, []>;
     changeProductStatus: Action<StoreModel, { status: string, id: string }>;
     loadOrders: Thunk<StoreModel, void>;
+    sales: Order[];
+    initializeSales: Action<StoreModel, []>;
+    loadSales: Thunk<StoreModel, void>;
 }
 
 export const stores = createStore<StoreModel>({
@@ -58,6 +61,15 @@ export const stores = createStore<StoreModel>({
     loadOrders: thunk(async (actions, payload) => {
         const { data } = await axios.get('http://localhost:8080/orders');
         actions.initializeOrder(data);
+    }),
+    sales: [],
+    initializeSales: action((actions, payload) => {
+        actions.sales = payload;
+        console.log(payload);
+    }),
+    loadSales: thunk(async (actions, payload) => {
+        const { data } = await axios.get(`http://localhost:8080/orders?status=confirmed`);
+        actions.initializeSales(data);
     }),
 });
 

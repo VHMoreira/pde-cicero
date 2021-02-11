@@ -23,6 +23,7 @@ const Products: React.FC = () => {
 
     return (
         <ProductContainer>
+            <h2>Produtos</h2>
             <button onClick={() => setOpen(!open)}>
                 Cadastrar produto
             </button>

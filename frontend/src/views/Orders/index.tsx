@@ -40,6 +40,7 @@ const Orders: React.FC = () => {
 
     return (
         <OrderContainer>
+            <h2>Pedidos</h2>
             <button onClick={() => setOpen(!open)}>
                 Realizar pedido
             </button>
