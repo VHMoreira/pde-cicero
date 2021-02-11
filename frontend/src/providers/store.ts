@@ -52,6 +52,7 @@ export const stores = createStore<StoreModel>({
     }),
     createOrder: thunk(async (actions, payload) => {
         await axios.post('http://localhost:8080/orders', payload);
+        console.log(payload);
         actions.loadOrders();
     }),
     changeStatus: thunk(async (actions, { status, id }) => {

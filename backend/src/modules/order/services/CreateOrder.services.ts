@@ -9,9 +9,11 @@ interface ProductRequest {
 
 export default class CreateProductService {
     public static async execute({ client_name, products }: ProductRequest): Promise<Order> {
-        const productsFinded = await ProductModel.find({
-            _id: { $in: products }
+        const promisses = products.map(async (p) => {
+            return await ProductModel.findById(p);
         });
+
+        const productsFinded = await Promise.all(promisses);
 
         const total = productsFinded.reduce((acc, curr) => acc + curr.price, 0);
 

@@ -7,11 +7,13 @@ export const LayoutContainer = styled.div`
     min-height: 100vh;
     display: flex;
     flex-direction: row;
+    position: relative;
 `;
 
 export const Menu = styled.div`
     background-color: #f5ad42;
-    height: 100%;
+    position: static;
+    /* height: 100%; */
     width: 100%;
     max-width: 300px;
     min-height: 100vh;

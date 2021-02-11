@@ -93,7 +93,10 @@ const Orders: React.FC = () => {
                     </Modal.Description>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button color='red' onClick={() => setOpen(false)}>
+                    <Button color='red' onClick={() => {
+                        setOpen(false)
+                        setSelectedProductsList([]);
+                    }}>
                         Cancelar
                     </Button>
                     <Button
@@ -103,6 +106,7 @@ const Orders: React.FC = () => {
                         onClick={() => {
                             create(formData);
                             setFormData({ client_name: '', products: [] as string[] });
+                            setSelectedProductsList([]);
                             setOpen(false);
                         }}
                         positive
