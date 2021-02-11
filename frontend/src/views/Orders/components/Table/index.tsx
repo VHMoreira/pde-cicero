@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTable } from 'react-table';
-import { Button, Table as STable } from 'semantic-ui-react'
+import { Button, Popup, Table as STable } from 'semantic-ui-react'
 import { useStoresActions } from '../../../../providers/store';
 import Order from '../../../../models/Order.model';
 import { tableDataFormater } from '../../../../shared/utils/tableDataFormater';
@@ -67,20 +67,28 @@ const Table: React.FC<Props> = ({ orders }) => {
                             })}
                             <STable.Cell textAlign='center'>
                                 {row.original.status === 'on_progress' &&
-                                    <Button
-                                        basic
-                                        color='green'
-                                        icon='check circle outline'
-                                        onClick={() => changeStatus({ id: row.original._id, status: 'confirmed' })}
+                                    <Popup
+                                        trigger={<Button
+                                            basic
+                                            color='green'
+                                            icon='check circle outline'
+                                            onClick={() => changeStatus({ id: row.original._id, status: 'confirmed' })}
+                                        />}
+                                        content='Confirmar pedido'
+                                        position='top center'
                                     />}
                             </STable.Cell>
                             <STable.Cell textAlign='center'>
                                 {row.original.status === 'on_progress' &&
-                                    <Button
-                                        basic
-                                        color='red'
-                                        icon='ban'
-                                        onClick={() => changeStatus({ id: row.original._id, status: 'canceled' })}
+                                    <Popup
+                                        trigger={<Button
+                                            basic
+                                            color='red'
+                                            icon='ban'
+                                            onClick={() => changeStatus({ id: row.original._id, status: 'canceled' })}
+                                        />}
+                                        content='Cancelar pedido'
+                                        position='top center'
                                     />}
                             </STable.Cell>
                         </STable.Row>

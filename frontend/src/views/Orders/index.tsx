@@ -76,7 +76,7 @@ const Orders: React.FC = () => {
                                                 {product.name}
                                             </TableCell>
                                             <TableCell>
-                                                {product.price}
+                                                {priceFormat(product.price)}
                                             </TableCell>
                                         </TableRow>
                                     ))}

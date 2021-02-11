@@ -1,80 +1,82 @@
-import React from 'react';
-import { useTable } from 'react-table';
-import { Table as STable } from 'semantic-ui-react'
+import React, { useCallback, useState } from 'react';
+import { Accordion, Icon, Table as STable, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from 'semantic-ui-react'
 import Order from '../../../../models/Order.model';
 import { priceFormat } from '../../../../shared/utils/priceFormat';
 import { tableDataFormater } from '../../../../shared/utils/tableDataFormater';
+import { TableContainer, TableContent } from './styles';
 
 interface Props {
     sales: Order[];
 }
 
 const Table: React.FC<Props> = ({ sales }) => {
-    const columns = React.useMemo(() => [
-        {
-            Header: 'Nome do cliente',
-            accessor: 'client_name' as keyof Order, // accessor is the "key" in the data
-        },
-        {
-            Header: 'Status',
-            accessor: 'status' as keyof Order,
-        },
-        {
-            Header: 'Feito em',
-            accessor: 'created_at' as keyof Order,
-        },
-        {
-            Header: 'Valor total',
-            accessor: 'total' as keyof Order,
-        },
-    ], []);
+    const [activeIndex, setActiveIndex] = useState(-1);
 
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow
-    } = useTable({ data: sales, columns: columns });
+    const handleClick = useCallback((index) => {
+        const newIndex = activeIndex === index ? -1 : index;
+
+        setActiveIndex(newIndex);
+    }, [activeIndex]);
+
 
     return (
-        <STable striped {...getTableProps()}>
-            <STable.Header>
-                {headerGroups.map(headerGroup => (
-                    <STable.Row {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map(column => (
-                            <STable.HeaderCell {...column.getHeaderProps()}>
-                                {column.render('Header')}
-                            </STable.HeaderCell>
-                        ))}
-                    </STable.Row>
-                ))}
-            </STable.Header>
-            <STable.Body {...getTableBodyProps()}>
-                {rows.map(row => {
-                    prepareRow(row)
-                    return (
-                        <STable.Row {...row.getRowProps()}>
-                            {row.cells.map(cell => {
-                                return (
-                                    <STable.Cell {...cell.getCellProps()}>
-                                        {tableDataFormater(cell.value)}
-                                    </STable.Cell>
-                                )
-                            })}
-                        </STable.Row>
-                    )
-                })}
-                <STable.Row>
-                    <STable.Cell />
-                    <STable.Cell />
-                    <STable.Cell content='R$' textAlign='right' />
-                    <STable.Cell>
-                        {priceFormat(sales.reduce((acc, current) => acc + current.total, 0))}
-                    </STable.Cell>
-                </STable.Row>
-            </STable.Body>
-        </STable>
+        <TableContainer>
+            <TableContent>
+                <Accordion fluid styled>
+                    {sales.map((s, index) => (
+                        <>
+                            <Accordion.Title
+                                active={activeIndex === index}
+                                index={index}
+                                onClick={() => handleClick(index)}>
+                                <header>
+                                    <Icon name='dropdown' />
+                                    <div>
+                                        {s.client_name}
+                                    </div>
+                                    <div>
+                                        {(tableDataFormater(s.status))}
+                                    </div>
+                                    <div>
+                                        {(tableDataFormater(s.created_at))}
+                                    </div>
+                                    <div>
+                                        {(tableDataFormater(s.total))}
+                                    </div>
+                                </header>
+                            </Accordion.Title>
+                            <Accordion.Content active={activeIndex === index}>
+                                <STable striped celled>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHeaderCell>
+                                                Nome do produto
+                                            </TableHeaderCell>
+                                            <TableHeaderCell>
+                                                Preço
+                                            </TableHeaderCell>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <TableBody>
+                                        {s.products.map((product, index) => (
+                                            <TableRow key={index}>
+                                                <TableCell>
+                                                    {product.name}
+                                                </TableCell>
+                                                <TableCell>
+                                                    R$ {priceFormat(product.price)}
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </STable>
+                            </Accordion.Content>
+                        </>
+                    ))}
+                </Accordion>
+
+            </TableContent>
+        </TableContainer>
     );
 }
 
